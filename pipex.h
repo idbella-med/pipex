@@ -3,6 +3,7 @@
 
 #include <unistd.h>
 #include <libc.h>
+#include "./helper/help.h"
 
 
 #endif

@@ -1,27 +1,29 @@
 NAME = pipex
-COMP = cc
+CC 	= cc
 FLAGS = -Wall -Wextra -Werror
-SRC = pipex.c
-HEADER = pipex.h
-OBJ = $(SRC:.c=.o)
+HEADER = pipex.h Libft/libft.h
 
-all : $(NAME)
+SRCS = main.c tools.c
 
-$(NAME) : $(OBJ)
-	@make re -C libft
-	$(COMP) $(FLAGS) $(OBJ) ./libft/libft.a -o $(NAME)
+OBJS = $(SRCS:.c=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	make -C Libft
+	@$(CC) $(FLAGS) ./Libft/libft.a $(OBJS) -o $@
 
 %.o: %.c $(HEADER)
-	$(COMP) $(FLAGS) -c -o $@ $<
+	@$(CC) $(FLAGS) -c $< -o $@
 
-clean :
-	rm -rf $(OBJ)
-	@make clean -C libft
+clean:
+	@rm -f $(OBJS)
+	@make clean -C Libft 
 
-fclean : clean
-	rm -rf $(NAME)
-	@make fclean -C libft
+fclean: clean
+	@rm -f $(NAME)
+	@make fclean -C Libft
 
-re : fclean all
+re: fclean all
 
-.Phony : clean
+.PHONY: clean
